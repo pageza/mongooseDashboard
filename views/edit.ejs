@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2><%= animal.name %></h2>
+        <h4><%= animal.type %></h4>
+        <h5><%= animal.age %></h5>
+    </div>
+    <form action="/animals/<%= animal._id %>" method="post">
+        <input type="text" name="name" placeholder="What is the updated name?" id="">
+        <input type="text" name="type" placeholder="What is the new type?" id="">
+        <input type="number" name="age" placeholder="What is the new age?" id="">
+    </form>
+</body>
+</html>

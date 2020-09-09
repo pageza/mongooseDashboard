@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/animals/new">Make a new animal</a>
+    <% for (var i in animals) { %>
+        <h2><%= animals[i].type %></h2>
+        <h3><%= animals[i].name %></h3>
+        <h4><%= animals[i].age %></h4>
+        <a href="/animals/<%= animals[i]._id %>">Show this animal</a>
+        <a href="/animals/edit/<%= animals[i]._id %>">Edit this animal</a>
+        <hr>
+    <% } %>
+</body>
+</html>
