@@ -12,9 +12,10 @@
         <h5><%= animal.age %></h5>
     </div>
     <form action="/animals/<%= animal._id %>" method="post">
-        <input type="text" name="name" placeholder="What is the updated name?" id="">
-        <input type="text" name="type" placeholder="What is the new type?" id="">
-        <input type="number" name="age" placeholder="What is the new age?" id="">
+        <input type="text" name="name" placeholder="What is the updated name?" value="<%= animal.name %>" id="">
+        <input type="text" name="type" placeholder="What is the new type?" value="<%= animal.type %>" id="">
+        <input type="number" name="age" placeholder="What is the new age?" value="<%= animal.age %>" id="">
+        <button type="submit">Update animal</button>
     </form>
 </body>
 </html>

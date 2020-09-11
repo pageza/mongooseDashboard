@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 // Connecting mongoose to the MongoDB
-mongoose.connect('mongodb://localhost/mongooseDashboard', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/mongooseDashboard', {useNewUrlParser: true, useUnifiedTopology: true });
 
 // Creating Schema and model 
 const AnimalSchema = new mongoose.Schema({
@@ -37,6 +37,11 @@ app.get('/', (req,res) => {
     .catch(err => res.json(err));
 })
 
+//This will display a form to make a new animal
+app.get('/animals/new', (req,res) => {
+  res.render('create')
+})
+
 //This will display one animal by id
 app.get('/animals/:id', (req,res) => {
   Animal.findById(req.params.id)
@@ -44,10 +49,7 @@ app.get('/animals/:id', (req,res) => {
     .catch(err => res.json(err))
 })
 
-//This will display a form to make a new animal
-app.get('/animals/new', (req,res) => {
-  res.render('create')
-})
+
 
 //This will be the POST action route for creating a new animal from GET /animals/new
 app.post('/animals', (req,res) => {
@@ -65,20 +67,34 @@ app.post('/animals', (req,res) => {
 //This will show a form to edit an existing animal
 app.get('/animals/edit/:id', (req, res) => {
   Animal.findById(req.params.id)
-    animal.name = req.body.name;
-    animal.type = req.body.type;
-    animal.age = req.body.age;
-    animal.save()
-      .then(updatedAnimalData => console.log('animal updated: ', updatedAnimalData))
-      .catch(err => console.log(err))
-    res.redirect('/')
+    .then(data => res.render('edit', {animal:data}))
+    .catch(err => res.json(err))
 })
 
 //This will be the POST action for the form to edit a animal from '/animals/edit/:id'
-app.post('/animals/:id')
+app.post('/animals/:id', (req,res) => {
+  Animal.updateOne({_id:req.params.id}, {
+    type: req.body.type,
+    name: req.body.name,
+    age: req.body.age
+  })
+    .then(result => {
+      console.log('Updated: ', result);
+      res.redirect('/')
+    })
+    .catch(err => res.json(err))
+})
 
 //This will be the POST action to destroy a animal by id
-app.post('/animals/destroy/:id')
+app.post('/animals/destroy/:id', (req,res) => {
+  console.log("Deleting: ", req.params.id);
+  Animal.remove({_id: req.params.id})
+    .then(deletedAnimal => {
+      console.log("Deleted: ", deletedAnimal);
+      res.redirect('/')
+    })
+    .catch(err => res.json(err))
+})
 
 //This sets the Express app to listen to port 8000 on our localhost
 app.listen(8080, () => console.log("listening on 8080"));

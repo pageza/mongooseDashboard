@@ -6,14 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="/animals/new">Make a new animal</a>
+    <a href="/animals/new" >Make a new animal</a>
     <% for (var i in animals) { %>
         <h2><%= animals[i].type %></h2>
         <h3><%= animals[i].name %></h3>
         <h4><%= animals[i].age %></h4>
         <a href="/animals/<%= animals[i]._id %>">Show this animal</a>
         <a href="/animals/edit/<%= animals[i]._id %>">Edit this animal</a>
+        <form action="/animals/destroy/<%= animals[i]._id %>" method="POST" ><button type="submit">Delete this animal?</button></form>
         <hr>
     <% } %>
+   
 </body>
 </html>
